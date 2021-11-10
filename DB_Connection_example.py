@@ -8,26 +8,8 @@ from sqlalchemy import create_engine
 
 # importing socket module for ip address identification
 import socket
-
-# Credentials Dictionary to connecting to database via different networks
-credentials = {
-    'mysql': {
-        'computer ip address': {'host': 'localhost', 'port': '3306', 'pw': '*****', 'user': 'mysql'},
-        'computer ip address2': {'host': 'localhost', 'port': '3306', 'pw': '*****', 'user': 'mysql'}
-    },
-    'postgresql': {
-        'computer ip address': {'host': 'localhost', 'port': '5432', 'pw': '****', 'user': 'postgres'},
-        'computer ip address2': {'host': 'localhost', 'port': '5432', 'pw': '*****', 'user': 'postgres'}
-    },
-    'oracle': {
-        'computer ip address': {'host': '127.0.0.1', 'port': '1521', 'pw': '*****', 'user': 'username'},
-        'computer ip address2': {'host': '127.0.0.1', 'port': '1521', 'pw': '*****', 'user': 'username'}
-    },
-    'sqlite': {
-        'computer ip address': {'host': 'C:\\path\\to\\foo.db', 'port': 'none', 'pw': 'none', 'user': 'none'},
-        'computer ip address2': {'host': 'C:\\path\\to\\foo.db', 'port': 'none', 'pw': 'none', 'user': 'none'}
-    }
-}
+# credentials file
+from credentials_example import *
 
 # getting the hostname by socket.gethostname() method
 hostname = socket.gethostname()
@@ -59,7 +41,7 @@ def cred_info_for(database_flavor):
         user = db.get('user')
     except NameError:
         print(
-            f"DB_Connection.py file: Variable db not defined since ip address on this computer is not in the "
+            f"credentials_example.py file: Variable db not defined since ip address on this computer is not in the "
             f"credentials for {database_flavor} "
             f"dict.\nAdd the ip address({ip_address}) and database connection credentials to the dictionary called "
             f"'credentials' .")
