@@ -4,7 +4,7 @@ pip install sqlalchemy
 pip install psycopg2
 
 database connection dependencies for MySQL
-pip install mysql-connector-python
+pip install mysqlclient
 pip intsll mysql
 *note: install microsoft C++ Build Tools  https://visualstudio.microsoft.com/visual-cpp-build-tools/
 Microsoft Visual C++ 14.0 or greater
@@ -13,8 +13,9 @@ from sqlalchemy import create_engine
 
 # importing socket module for ip address identification
 import socket
+
 # credentials file
-from credentials_example import *
+from credentials import *
 
 # getting the hostname by socket.gethostname() method
 hostname = socket.gethostname()
@@ -33,11 +34,11 @@ def cred_info_for(database_flavor):
     '''
     for key, value in credentials.items():
         if database_flavor == key:
-            print("assign ip address")
-        for k, v in value.items():
-            if ip_address == k:
-                # appending to dictionary d
-                db = v
+            print(f"assigning ip address {key}")
+            for k, v in value.items():
+                if ip_address == k:
+                    # appending to dictionary d
+                    db = v
     try:
         # Store in variables
         host = db.get('host')
@@ -46,7 +47,7 @@ def cred_info_for(database_flavor):
         user = db.get('user')
     except NameError:
         print(
-            f"credentials_example.py file: Variable db not defined since ip address on this computer is not in the "
+            f"credentials.py file: Variable db not defined since ip address on this computer is not in the "
             f"credentials for {database_flavor} "
             f"dict.\nAdd the ip address({ip_address}) and database connection credentials to the dictionary called "
             f"'credentials' .")
@@ -102,13 +103,14 @@ def SQLiteConnection(DbName):
 
 
 # test connection
-connection = PostgresConnection("db_name_here")
-result = connection.execute("select * from table_name")
-for row in result:
-    print("table_name:", row['column_name'])
+# connection = PostgresConnection("dvdrental")
+# result = connection.execute("select * from actor")
+# for row in result:
+#     print("actor:", row['first_name'])
 
 # # test connection
 # connection = MysqlConnection("world")
 # result = connection.execute("select * from city")
 # for row in result:
 #     print("Name:", row['Name'])
+
