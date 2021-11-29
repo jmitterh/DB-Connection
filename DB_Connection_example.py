@@ -1,8 +1,13 @@
 '''
-database connection dependencies (postgresql so far):
+database connection dependencies postgresql:
 pip install sqlalchemy
 pip install psycopg2
 
+database connection dependencies for MySQL
+pip install mysql-connector-python
+pip intsll mysql
+*note: install microsoft C++ Build Tools  https://visualstudio.microsoft.com/visual-cpp-build-tools/
+Microsoft Visual C++ 14.0 or greater
 '''
 from sqlalchemy import create_engine
 
@@ -64,13 +69,13 @@ def PostgresConnection(DbName):
     return engine
 
 
-# MySQL *have not tested
+# MySQL
 def MysqlConnection(DbName):
     host, port, pw, user = cred_info_for("mysql")
 
     DB_PASS = pw
     DB_NAME = DbName.lower()
-    engine = create_engine(f'mysql://{user}:{DB_PASS}@{host}:{port}/{DB_NAME}')
+    engine = create_engine(f'mysql+mysqldb://{user}:{DB_PASS}@{host}:{port}/{DB_NAME}')
 
     return engine
 
@@ -101,3 +106,9 @@ connection = PostgresConnection("db_name_here")
 result = connection.execute("select * from table_name")
 for row in result:
     print("table_name:", row['column_name'])
+
+# # test connection
+# connection = MysqlConnection("world")
+# result = connection.execute("select * from city")
+# for row in result:
+#     print("Name:", row['Name'])
